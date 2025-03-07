@@ -169,3 +169,6 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+GBM_Model.ipynb
+GBM_Model_Instructions.MD
+exercise_27_train.csv
