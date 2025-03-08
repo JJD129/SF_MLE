@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
 from typing import List, Dict
 from src.preprocessing import preprocessing_input
 from src.model import predict_model
@@ -7,13 +6,9 @@ from src.model import predict_model
 # Initialize FastAPI
 app = FastAPI()
 
-# Define API input structure (List of Dictionaries)
-class InputData(BaseModel):
-    __root__: Dict[str, str]  # Each item is a dictionary with key-value pairs
-
 # Prediction endpoint
 @app.post("/predict")
-async def predict(input_data: List[Dict[str, str]]):  # Accepts a list of dictionaries directly
+async def predict(input_data: List[Dict[str, str]]):  # ✅ Directly accept a list of dicts
     input_df = preprocessing_input(input_data)  # ✅ Preprocess input
 
     # Run model prediction
