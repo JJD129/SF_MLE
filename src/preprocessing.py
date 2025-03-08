@@ -3,7 +3,6 @@ import numpy as np
 import joblib
 import os
 
-
 # define artifacts dir
 artifactsdir = os.path.join(os.getcwd(), "artifacts")
 
@@ -46,7 +45,7 @@ def impute_missing_numerical(df):
             df[col] = np.nan
 
     df[expected_features] = imputer.transform(df[expected_features])
-    
+
     return df
 
 def transform_ohe(df):
@@ -72,6 +71,8 @@ def preprocessing_input(data):
     df = impute_missing_numerical(df)
     df = transform_ohe(df)
 
+    df = df.reindex(columns=selected_features, fill = 0)
+
     # return selected features
-    return df[selected_features]
+    return df
 
