@@ -12,7 +12,7 @@ class InputData(BaseModel):
     features: Dict[str, str] # features is defined as key-value pairs [column names, value]
 
 # pred endpoint
-@app.get("/predict")
+@app.post("/predict")
 async def predict(input_data: List[InputData]):
     # convert input JSON to a dataframe
     input_dicts = [item.features for item in input_data]
