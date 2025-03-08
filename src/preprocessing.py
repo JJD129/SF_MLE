@@ -1,5 +1,5 @@
 import pandas as pd
-
+import numpy as np
 import joblib
 import os
 
@@ -39,9 +39,14 @@ def impute_missing_numerical(df):
     simple mean imputation on mean on numerical cols
     """
 
-    mi_num = df.select_dtypes(include=['float64']).columns
-    df[mi_num] = imputer.transform(df[mi_num])
+    expected_features = imputer.feature_names_in_
 
+    for col in expected_features:
+        if col not in df.columns:
+            df[col] = np.nan
+
+    df[expected_features] = imputer.transform(df[expected_features])
+    
     return df
 
 def transform_ohe(df):
