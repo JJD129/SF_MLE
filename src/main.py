@@ -1,34 +1,31 @@
 from fastapi import FastAPI
-from pydantic import BaseModel, RootModel
+from pydantic import BaseModel
 from typing import List, Dict
-from src. preprocessing import preprocessing_input
+from src.preprocessing import preprocessing_input
 from src.model import predict_model
 
-# initalize FastAPI
+# Initialize FastAPI
 app = FastAPI()
 
-# define API input structure 
+# Define API input structure (List of Dictionaries)
 class InputData(BaseModel):
-    root: List[Dict[str, str]]
+    __root__: Dict[str, str]  # Each item is a dictionary with key-value pairs
 
-# pred endpoint
+# Prediction endpoint
 @app.post("/predict")
-async def predict(input_data: InputData):
-    # convert input JSON to a dataframe
-    input_dicts = input_data.root
-    input_df = preprocessing_input(input_dicts)
+async def predict(input_data: List[Dict[str, str]]):  # Accepts a list of dictionaries directly
+    input_df = preprocessing_input(input_data)  # ✅ Preprocess input
 
-    # run model pred
+    # Run model prediction
     probabilities, predictions = predict_model(input_df)
 
-    # format output as JSON
+    # Format output as JSON
     results = [
         {
             "business_outcome": int(pred[0]),
             "prediction": float(prob[0]),
             "feature_inputs": data
-
         }
-        for data, pred, prob in zip(input_dicts, predictions, probabilities)
+        for data, pred, prob in zip(input_data, predictions, probabilities)
     ]
     return results
