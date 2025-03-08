@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, RootModel
 from typing import List, Dict
 from src. preprocessing import preprocessing_input
 from src.model import predict_model
@@ -9,13 +9,13 @@ app = FastAPI()
 
 # define API input structure 
 class InputData(BaseModel):
-    __root__: Dict[str, str] 
+    root: List[Dict[str, str]]
 
 # pred endpoint
 @app.post("/predict")
-async def predict(input_data: List[InputData]):
+async def predict(input_data: InputData):
     # convert input JSON to a dataframe
-    input_dicts = [item.__root__ for item in input_data]
+    input_dicts = input_data.root
     input_df = preprocessing_input(input_dicts)
 
     # run model pred
