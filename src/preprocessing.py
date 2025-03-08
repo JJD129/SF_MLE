@@ -40,7 +40,7 @@ def impute_missing_numerical(df):
     """
 
     mi_num = df.select_dtypes(include=['float64']).columns
-    df[mi_num] = imputer.fit_transform(df[mi_num])
+    df[mi_num] = imputer.transform(df[mi_num])
 
     return df
 
