@@ -2,14 +2,16 @@ from fastapi import FastAPI
 from typing import List, Dict
 from src.preprocessing import preprocessing_input
 from src.model import predict_model
+from typing import Union
+
 
 # Initialize FastAPI
 app = FastAPI()
 
 # Prediction endpoint
 @app.post("/predict")
-async def predict(input_data: List[Dict[str, str]]):  # ✅ Directly accept a list of dicts
-    input_df = preprocessing_input(input_data)  # ✅ Preprocess input
+async def predict(input_data: List[Dict[str, Union[str, float, int, None]]]):
+    input_df = preprocessing_input(input_data)
 
     # Run model prediction
     probabilities, predictions = predict_model(input_df)
