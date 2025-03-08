@@ -56,5 +56,15 @@ def transform_ohe(df):
 
     return df
 
+def preprocessing_input(data):
+    """
+    preprocessing pipeline by applying all transformations
+    """
+    df = pd.DataFrame(data)
+    df = convert_money_and_percents(df)
+    df = impute_missing_numerical(df)
+    df = transform_ohe(df)
 
+    # return selected features
+    return df[selected_features]
 
