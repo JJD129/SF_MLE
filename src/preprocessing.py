@@ -20,17 +20,17 @@ def convert_money_and_percents(df):
     """
     converting x_75 and _x89 to float
     """
+
     if "x_75" in df.columns:
-        df["x_75"] = df["x_75"].str.replace('$', '', regex=False)\
-                                .str.replace(',', '', regex=False)\
-                                .str.replace(')', '', regex=False)\
-                                .str.replace('(', '-', regex=False)
-        df["x_75"] = pd.to_numeric(df["x_75"], errors='coerce')
-
+        df["x_75"] = df["x_75"].str.replace('$','',regex=False)\
+                                .str.replace(',','',regex=False)\
+                                .str.replace(')','',regex=False)\
+                                .str.replace('(','-',regex=False)\
+                                .astype(float)
     if "x_89" in df.columns:
-        df["x_89"] = df["x_89"].str.replace('%', '', regex=False)
-        df["x_89"] = pd.to_numeric(df["x_89"], errors='coerce')
-
+        df["x_89"].str.replace('%','',regex=False)\
+                    .astype(float)
+    
     return df
 
 def impute_missing_numerical(df):
