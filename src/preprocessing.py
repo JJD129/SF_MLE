@@ -49,6 +49,8 @@ def transform_ohe(df):
     apply one hot encoding on pretrained encoders
     """
 
+    df_transformed = df.copy()
+
     for var, encoder in encoders.items():
         if var in df.columns:
             encoder_df = pd.DataFrame(encoder.transform(df[[var]]), columns=encoder.get_feature_names_out([var]))
