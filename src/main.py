@@ -24,7 +24,7 @@ async def predict(input_data: List[InputData]):
     # format output as JSON
     results = [
         {
-            "business_outcome": int(pred),
+            "business_outcome": int(pred.item()),
             "prediction": int(prob),
             "feature_inputs": data
 
