@@ -14,7 +14,7 @@ features_path = os.path.join(artifactsdir, "selected_featurs.pkl")
 
 # load preprocessing artifacts
 imputer = joblib.load(imputer_path)
-encoder = joblib.load(encoder_path)
+encoders = joblib.load(encoder_path)
 selected_features = joblib.load(features_path)
 
 def convert_money_and_percents(df):
@@ -43,4 +43,18 @@ def impute_missing_numerical(df):
     df[mi_num] = imputer.fit_transform(df[mi_num])
 
     return df
+
+def transform_ohe(df):
+    """
+    apply one hot encoding on pretrained encoders
+    """
+
+    for var, encoder in encoders.items():
+        if var in df.columns:
+            encoder_df = pd.DataFrame(encoder.transform(df[[var]]), columns=encoder.get_feature_names_out([var]))
+            df_transformed = pd.concat([df_transformed.drop(columns=[var]), encoder_df], axis=1)
+
+    return df
+
+
 
