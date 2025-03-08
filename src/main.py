@@ -25,7 +25,7 @@ async def predict(input_data: List[InputData]):
     results = [
         {
             "business_outcome": int(pred[0]),
-            "prediction": int(prob[0]),
+            "prediction": float(prob[0]),
             "feature_inputs": data
 
         }
