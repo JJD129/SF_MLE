@@ -10,7 +10,7 @@ artifactsdir = os.path.join(os.getcwd(), "artifacts")
 # artifact directories
 imputer_path = os.path.join(artifactsdir, "imputer.pkl")
 encoder_path = os.path.join(artifactsdir, "encoder.pkl")
-features_path = os.path.join(artifactsdir, "selected_featurs.pkl")
+features_path = os.path.join(artifactsdir, "selected_features.pkl")
 
 # load preprocessing artifacts
 imputer = joblib.load(imputer_path)
