@@ -29,7 +29,7 @@ def convert_money_and_percents(df):
                                 .str.replace('(','-',regex=False)\
                                 .astype(float)
     if "x_89" in df.columns:
-        df["x_89"].str.repace('%','',regex=False)\
+        df["x_89"].str.replace('%','',regex=False)\
                     .astype(float)
     
     return df
