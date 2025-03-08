@@ -9,13 +9,13 @@ app = FastAPI()
 
 # define API input structure 
 class InputData(BaseModel):
-    features: Dict[str, str] # features is defined as key-value pairs [column names, value]
+    __root__: Dict[str, str] 
 
 # pred endpoint
 @app.post("/predict")
 async def predict(input_data: List[InputData]):
     # convert input JSON to a dataframe
-    input_dicts = [item.features for item in input_data]
+    input_dicts = [item.__root__ for item in input_data]
     input_df = preprocessing_input(input_dicts)
 
     # run model pred
