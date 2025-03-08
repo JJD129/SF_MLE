@@ -33,3 +33,14 @@ def convert_money_and_percents(df):
                     .astype(float)
     
     return df
+
+def impute_missing_numerical(df):
+    """
+    simple mean imputation on mean on numerical cols
+    """
+
+    mi_num = df.select_dtypes(include=['float64']).columns
+    df[mi_num] = imputer.fit_transform(df[mi_num])
+
+    return df
+
