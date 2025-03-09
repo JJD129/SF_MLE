@@ -172,3 +172,4 @@ cython_debug/
 GBM_Model.ipynb
 GBM_Model_Instructions.MD
 exercise_27_train.csv
+/JD_submission
