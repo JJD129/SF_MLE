@@ -32,9 +32,9 @@ async def predict(input_data: List[Dict[str, Union[str, float, int, None]]]):
             {
                 "business_outcome": int(pred),
                 "prediction": float(prob),
-                "feature_inputs": {key: data[key] for key in selected_features if key in data}
+                "feature_inputs": {key: float(input_df.iloc[i][key]) for key in selected_features if key in input_df.columns}
             }
-            for data, pred, prob in zip(input_data, predictions, probabilities)
+            for i, (pred, prob) in enumerate(zip(predictions, probabilities))
         ]
         return results
     except Exception as e:
