@@ -101,7 +101,12 @@ def preprocessing_input(data):
         df = impute_missing_numerical(df)
         df = transform_ohe(df)
 
+        # Debugging: print the transformed column names before feature selection
+        logging.info("Columns after OHE:", df.columns.tolist())
+
         df = df.reindex(columns=selected_features, fill_value = 0)
+        # Debugging: print final selected features
+        logging.info("Final selected features in df:", df.columns.tolist())
 
         logging.info("Preprocessing completed successfully.")
         
