@@ -16,6 +16,9 @@ imputer = joblib.load(imputer_path)
 encoders = joblib.load(encoder_path)
 selected_features = joblib.load(features_path)
 
+# handle categoreical variables explicity
+categorical_vars = ['x_16', 'x_51', 'x_65', 'x_9']
+
 def convert_money_and_percents(df):
     """
     converting x_75 and _x89 to float
@@ -56,11 +59,12 @@ def transform_ohe(df):
     df_transformed = df.copy()
 
     for var, encoder in encoders.items():
-        if var in df.columns:
-            encoder_df = pd.DataFrame(encoder.transform(df[[var]]), columns=encoder.get_feature_names_out([var]))
+        if var in categorical_vars and var in df.columns:
+            encoder_df = pd.DataFrame(encoder.transform(df[[var]]), 
+                                      columns=encoder.get_feature_names_out([var]))
             df_transformed = pd.concat([df_transformed.drop(columns=[var]), encoder_df], axis=1)
 
-    return df
+    return df_transformed
 
 def preprocessing_input(data):
     """
