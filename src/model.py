@@ -1,6 +1,8 @@
 import joblib
 import os
-
+import sys
+import logging
+from src.exception import CustomException
 
 # define artifacts dir
 artifactsdir = os.path.join(os.getcwd(), "artifacts")
@@ -23,11 +25,18 @@ def predict_model(input_df):
     Returns:
         tuple: (probablitlies, predictions)
     """
+    try:
 
-    # only selected features are used
-    input_df = input_df[selected_features]
+        # only selected features are used
+        input_df = input_df[selected_features]
 
-    probabilities = model.predict_proba(input_df)
-    predictions = (probabilities[:, 1] >= 0.75).astype(int)
+        probabilities = model.predict_proba(input_df)
+        predictions = (probabilities[:, 1] >= 0.75).astype(int)
 
-    return probabilities[:, 1], predictions
+        logging.info("Successfully made pred")
+
+        return probabilities[:, 1], predictions
+    
+    except Exception as e:
+        logging.error("Error in predict_model function", exc_info=True)
+        raise CustomException(e, sys)
