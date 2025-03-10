@@ -21,7 +21,7 @@ app = FastAPI()
 @app.post("/predict")
 async def predict(input_data: List[Dict[str, Union[str, float, int, None]]]):
     try:
-        logging.info("Received request with input data: %s", input_data)
+        logging.info("Received request with input data: %s")
         input_df = preprocessing_input(input_data)
 
         # Run model prediction
