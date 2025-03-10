@@ -26,8 +26,8 @@ async def predict(input_data: List[Dict[str, Union[str, float, int, None]]]):
     # Format output as JSON
     results = [
         {
-            "business_outcome": int(pred[0]),
-            "prediction": float(prob[0]),
+            "business_outcome": int(pred),
+            "prediction": float(prob),
             "feature_inputs": {key: data[key] for key in selected_features if key in data}
         }
         for data, pred, prob in zip(input_data, predictions, probabilities)
